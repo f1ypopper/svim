@@ -1,0 +1,24 @@
+.gridtable{
+    border: 1px;
+    border-style: solid;
+    height: max-content;
+    width: max-content;
+    border-collapse: collapse;
+}
+
+.gridrow{
+    border: 1px solid;
+    min-height: 25px;
+}
+
+.cell{
+    width: 100px;
+    border: 1px solid;
+    height: 25px;
+}
+
+.row-ruler{
+    width: 20px;
+    border: 1px solid;
+    height: 25px;
+}
