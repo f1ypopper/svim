@@ -1,6 +1,6 @@
 import Row from './row.js';
 import './Grid.css';
-export default function Grid({size}){
+export default function Grid({selected}){
     var column_ruler = [<th></th>];
     var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for(var i = 0; i < 26; i++){
@@ -8,7 +8,7 @@ export default function Grid({size}){
     }
     var rows = [];
     for(var i = 0; i < 100; i++){
-        rows.push(<Row row_no={i}></Row>)
+        rows.push(<Row row_no={i} selected={selected}></Row>)
     }
     return (
     <table className='gridtable'>

@@ -17,6 +17,12 @@
     height: 25px;
 }
 
+.selected-cell{
+    width: 100px;
+    border: 4px solid rgb(13, 198, 255);
+    height: 25px;
+}
+
 .row-ruler{
     width: 20px;
     border: 1px solid;
