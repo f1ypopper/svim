@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <title>
+        svim
+    </title>
+</head>
+
+<body>
+    <table id="status" class="status">
+        <tr>
+            <td id="status_current_cell" class="status_current_cell"></td>
+            <td id="status_current_cell_value" class="status_current_cell_value"></td>
+        </tr>
+    </table>
+    <table id="grid">
+    </table>
+    <p class="command-bar" id="command-bar">
+        NORMAL
+    </p>;
+    <script src="globals.js"></script>
+    <script src="common.js"></script>
+    <script type="module" src="command.js"></script>
+    <script type="module" src="normal.js"></script>
+    <script type="module" src="insert.js"></script>
+    <script type="module" src="insert.js"></script>
+    <script type="module" src="init.js"></script>
+    <script>
+        function myFunction() {
+            var status = document.getElementById("status");
+            var grid = document.getElementById("grid");
+            var stickyTop = status.offsetTop;
+            var stickyLeft = status.offsetLeft;
+            if (window.scrollY > stickyTop) {
+                status.classList.add("sticky_status");
+            } else if (window.scrollX > stickyLeft) {
+                status.classList.add("sticky_status_horizontal");
+                grid.style.top = "30px";
+            }
+            else {
+                status.classList.remove("sticky_status");
+                status.classList.remove("sticky_status_horizontal");
+                grid.style.top = "0px";
+            }
+        }
+        window.addEventListener('scroll', myFunction);
+    </script>
+</body>
+
+</html>

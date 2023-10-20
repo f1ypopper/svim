@@ -1,0 +1,112 @@
+.grid-cell {
+    width: 100px;
+    height: 25px;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.current-cell {
+    width: 100px;
+    height: 25px;
+    outline: 3px solid rgb(33, 255, 62);
+    background-color: rgb(33, 255, 62, 0.2);
+}
+
+.visual-selected-cell {
+    width: 100px;
+    height: 25px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgba(255, 25, 217, 0.2);
+}
+
+.row-header {
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgba(48, 193, 250, 0.5);
+    font-weight: normal;
+}
+.col_heads{
+    top: 30px;
+    position: sticky;
+}
+.col-header {
+    width: 100px;
+    height: 15px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgba(48, 193, 250, 0.5);
+    font-weight: normal;
+}
+
+.cell-input {
+    border: 0px;
+    width: 100px;
+    height: 25px;
+}
+
+table {
+    border-collapse: collapse;
+    width: max-content;
+    height: max-content;
+    row-gap: 20px;
+    column-gap: 20px;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    width: fit-content;
+    scrollbar-width: none;
+}
+
+.status{
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    background-color: white;
+    overflow: hidden;
+    z-index: 1;
+}
+.sticky_status {
+    width: 100%;
+    height: 30px;
+    position: fixed;
+    top: 0;
+    margin: 0;
+    background-color: white;
+    z-index: 1;
+}
+.sticky_status_horizontal {
+    width: 100%;
+    height: 30px;
+    position: fixed;
+    left: 0;
+    margin: 0;
+    top: 0;
+}
+.status_current_cell {
+    border: 2px solid black;
+    width: 70px;
+    background-color: rgb(255, 165, 0, 0.5);
+}
+
+.status_current_cell_value {
+    border: 2px solid black;
+    min-width: 300px;
+}
+#grid{
+    position: relative;
+}
+.command-bar {
+    width: 100%;
+    min-height: 30px;
+    background-color: rgb(235, 248, 118);
+    position: fixed;
+    bottom: 0;
+    opacity: 0.7;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+}
