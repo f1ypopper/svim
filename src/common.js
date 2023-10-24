@@ -103,7 +103,11 @@ function deleteSelection() {
 function updateStatusBar() {
     let selectedCell = getCurrentCell();
     let inputCell = selectedCell.children[0];
-    document.getElementById('status_current_cell_value').innerHTML = inputCell.value;
+    if ((convertColNum(currentCol)+currentRow) in formulaTable){
+        document.getElementById('status_current_cell_value').innerHTML = formulaTable[(convertColNum(currentCol)+currentRow)].source;
+    }else{
+        document.getElementById('status_current_cell_value').innerHTML = inputCell.value;
+    }
     if (isVisual) {
         document.getElementById('status_current_cell').innerHTML = convertColNum(selectionStartCellCol) + selectionStartCellRow+':' + convertColNum(selectionEndCellCol)+selectionEndCellRow;
     } else if (mode === 'NORMAL') {

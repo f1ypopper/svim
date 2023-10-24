@@ -1,3 +1,5 @@
+import {parse, Executor} from './formulaengine.js';
+
 function bold(args) {
     let startCol, startRow, endCol, endRow;
     if (isVisual) {
@@ -142,7 +144,8 @@ function addToGrid(args) {
     }
     exitCommandMode();
 }
-export var commandMap = { 'trans': trans, 'fill': fill, 'center': center, 'bold': bold, 'add': addToGrid };
+
+export var commandMap = { 'trans': trans, 'fill': fill, 'center': center, 'bold': bold, 'add': addToGrid};
 function parseCommand() {
     let scomm = commandBuffer.split(' ');
     return { name: scomm.at(0), args: scomm.slice(1) };

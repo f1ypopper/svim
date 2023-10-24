@@ -28,3 +28,8 @@ const colNames = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 //COMMAND BAR
 let commandBar = document.getElementById('command-bar');
+
+
+//FORMULA
+let depTable = {};
+let formulaTable = {};
