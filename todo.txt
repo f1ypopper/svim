@@ -1,0 +1,9 @@
+==TODO==
+
+FORMULA ENGINE:
+1. Create a common function to update any cell's value so we can check for dependencies
+2. Support for Cell Range
+
+GENERAL:
+1. Refactor Code
+2. Pls use uniform addressing of cells
