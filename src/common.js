@@ -120,6 +120,8 @@ function updateCommandBar() {
         commandBar.innerHTML = 'NORMAL';
     } else if (mode === 'COMMAND') {
         commandBar.innerHTML = ':' + commandBuffer;
+    }else{
+        commandBar.innerHTML = mode;
     }
 }
 

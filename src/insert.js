@@ -30,7 +30,6 @@ export function modeInsert(ev) {
         }
         if(convertColNum(currentCol)+currentRow in depTable){
             for(const dep of depTable[convertColNum(currentCol)+currentRow].values()){
-                console.log('hi');
                 reExec(dep.col, dep.row);
             }
         }
