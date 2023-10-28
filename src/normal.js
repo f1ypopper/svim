@@ -53,6 +53,12 @@ export function modeNormal(ev) {
         case 'i': {
             //Insert
             mode = 'INSERT';
+            let currentElem = getCurrentCell();
+            let cellInput = currentElem.children[0];
+            if(convertColNum(currentCol)+currentRow in formulaTable){
+                cellInput.value = formulaTable[convertColNum(currentCol)+currentRow].source;
+                delete formulaTable[convertColNum(currentCol)+currentRow];
+            }
             break;
         }
         case 'G': {
