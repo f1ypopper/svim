@@ -354,7 +354,7 @@ export class Executor {
         if (literalExpr.literal.type === tokenType.Literal) {
             return literalExpr.literal.value;
         }else if(literalExpr.literal.type === tokenType.Cell){
-            let cell = getInputCell(convertColLabel(literalExpr.literal.col), literalExpr.literal.row);
+            let cell = getInputCell(colLabel2Num(literalExpr.literal.col), literalExpr.literal.row);
             return parseFloat(cell.value);
         }
     }

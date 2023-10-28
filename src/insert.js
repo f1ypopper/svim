@@ -8,9 +8,9 @@ function handleFormula() {
         if (!(dep in depTable)) {
             depTable[dep] = new Set();
         }
-        depTable[dep].add({ col: convertColNum(currentCol), row: currentRow });
+        depTable[dep].add({ col: colNum2Label(currentCol), row: currentRow });
     }
-    formulaTable[convertColNum(currentCol) + currentRow] = { expr: formula.expr, source: source };
+    formulaTable[colNum2Label(currentCol) + currentRow] = { expr: formula.expr, source: source };
     let executor = new Executor(formula.expr);
     inputCell.value = executor.execute();
 }
@@ -18,16 +18,16 @@ function handleFormula() {
 function reExec(col, row) {
     let formula = formulaTable[col + row];
     let executor = new Executor(formula.expr);
-    getInputCell(convertColLabel(col), row).value = executor.execute();
+    getInputCell(colLabel2Num(col), row).value = executor.execute();
 }
 
 function reExecDeps(col, row) {
     //Maybe switch to a queue?
     console.log(col, row);
-    if (convertColNum(col) + row in depTable) {
-    for (const dep of depTable[convertColNum(col) + row].values()) {
+    if (colNum2Label(col) + row in depTable) {
+    for (const dep of depTable[colNum2Label(col) + row].values()) {
             reExec(dep.col, dep.row);
-            reExecDeps(convertColLabel(dep.col), dep.row);
+            reExecDeps(colLabel2Num(dep.col), dep.row);
         }
     }
 }

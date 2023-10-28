@@ -55,9 +55,9 @@ export function modeNormal(ev) {
             mode = 'INSERT';
             let currentElem = getCurrentCell();
             let cellInput = currentElem.children[0];
-            if(convertColNum(currentCol)+currentRow in formulaTable){
-                cellInput.value = formulaTable[convertColNum(currentCol)+currentRow].source;
-                delete formulaTable[convertColNum(currentCol)+currentRow];
+            if(colNum2Label(currentCol)+currentRow in formulaTable){
+                cellInput.value = formulaTable[colNum2Label(currentCol)+currentRow].source;
+                delete formulaTable[colNum2Label(currentCol)+currentRow];
             }
             break;
         }

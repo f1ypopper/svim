@@ -1,11 +1,11 @@
 function setCurrent(col, row) {
-    let selected = document.getElementById(convertColNum(col) + row);
+    let selected = document.getElementById(colNum2Label(col) + row);
     selected.classList.add('current-cell');
     selected.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });
 }
 
 function removeCurrent(col, row) {
-    let selected = document.getElementById(convertColNum(col) + row);
+    let selected = document.getElementById(colNum2Label(col) + row);
     //selected.className='grid-cell';
     selected.classList.remove('current-cell');
 }
@@ -25,7 +25,7 @@ function addSelected(Col, Row) {
     let endRow = Math.max(selectionStartCellRow, Row);
     for (let col = startCol; col <= endCol; col++) {
         for (let row = startRow; row <= endRow; row++) {
-            document.getElementById(convertColNum(col) + row).classList.add('visual-selected-cell');
+            document.getElementById(colNum2Label(col) + row).classList.add('visual-selected-cell');
         }
     }
     selectionEndCellRow = Row;
@@ -39,7 +39,7 @@ function clearSelection() {
     let endRow = Math.max(selectionStartCellRow, selectionEndCellRow);
         for (let row = startRow; row <= endRow; row++) {
             for (let col = startCol; col <= endCol; col++) {
-            document.getElementById(convertColNum(col) + row).classList.remove('visual-selected-cell');
+            document.getElementById(colNum2Label(col) + row).classList.remove('visual-selected-cell');
         }
     }
 }
@@ -103,15 +103,15 @@ function deleteSelection() {
 function updateStatusBar() {
     let selectedCell = getCurrentCell();
     let inputCell = selectedCell.children[0];
-    if ((convertColNum(currentCol)+currentRow) in formulaTable){
-        document.getElementById('status_current_cell_value').innerHTML = formulaTable[(convertColNum(currentCol)+currentRow)].source;
+    if ((colNum2Label(currentCol)+currentRow) in formulaTable){
+        document.getElementById('status_current_cell_value').innerHTML = formulaTable[(colNum2Label(currentCol)+currentRow)].source;
     }else{
         document.getElementById('status_current_cell_value').innerHTML = inputCell.value;
     }
     if (isVisual) {
-        document.getElementById('status_current_cell').innerHTML = convertColNum(selectionStartCellCol) + selectionStartCellRow+':' + convertColNum(selectionEndCellCol)+selectionEndCellRow;
+        document.getElementById('status_current_cell').innerHTML = colNum2Label(selectionStartCellCol) + selectionStartCellRow+':' + colNum2Label(selectionEndCellCol)+selectionEndCellRow;
     } else if (mode === 'NORMAL') {
-        document.getElementById('status_current_cell').innerHTML = convertColNum(currentCol) + currentRow;
+        document.getElementById('status_current_cell').innerHTML = colNum2Label(currentCol) + currentRow;
     }
 }
 
@@ -125,7 +125,7 @@ function updateCommandBar() {
     }
 }
 
-function convertColNum(col){
+function colNum2Label(col){
     let colLabel = '';
     let fC = Math.floor(col/26);
     let sC = col % 26;
@@ -137,7 +137,7 @@ function convertColNum(col){
     return colLabel;
 }
 
-function convertColLabel(label){
+function colLabel2Num(label){
     let len = label.length-1;
     let col = 0;
     let index = 0;
@@ -151,15 +151,15 @@ function convertColLabel(label){
 }
 
 function getCurrentCell(){
-    return document.getElementById(convertColNum(currentCol) + currentRow)
+    return document.getElementById(colNum2Label(currentCol) + currentRow)
 }
 
 function getInputCell(col, row){
-    return document.getElementById(convertColNum(col) + row+'_input')
+    return document.getElementById(colNum2Label(col) + row+'_input')
 }
 
 function parseCordinate(cord){
     let regex = /([a-zA-Z]+)(\d+)/;
     let result = cord.match(regex).slice(1);
-    return {col: convertColLabel(result[0].toUpperCase()), row: parseInt(result[1])};
+    return {col: colLabel2Num(result[0].toUpperCase()), row: parseInt(result[1])};
 }

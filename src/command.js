@@ -15,7 +15,7 @@ function bold(args) {
     }
     for (let row = startRow; row <= endRow; row++) {
         for (let col = startCol; col <= endCol; col++) {
-            document.getElementById(convertColNum(col) + row + '_input').style.fontWeight = 'bold';
+            document.getElementById(colNum2Label(col) + row + '_input').style.fontWeight = 'bold';
         }
     }
     exitCommandMode();
@@ -36,7 +36,7 @@ function center(args) {
     }
     for (let row = startRow; row <= endRow; row++) {
         for (let col = startCol; col <= endCol; col++) {
-            document.getElementById(convertColNum(col) + row + '_input').style.textAlign = 'center';
+            document.getElementById(colNum2Label(col) + row + '_input').style.textAlign = 'center';
         }
     }
     exitCommandMode();
@@ -56,7 +56,7 @@ function fill(args) {
     } else {
         startCol = currentCol;
         startRow = currentRow;
-        endCol = convertColLabel(args[0].toUpperCase());
+        endCol = colLabel2Num(args[0].toUpperCase());
         endRow = parseInt(args[0].substring(1));
     }
     let num = 0;
@@ -101,7 +101,7 @@ function addToGrid(args) {
         for (let i = maxCols; i < maxCols + n; i++) {
             const ch = document.createElement("th");
             ch.className = 'col-header';
-            ch.innerHTML = convertColNum(i);
+            ch.innerHTML = colNum2Label(i);
             col_header.appendChild(ch);
         }
         for (let i = 0; i < maxRows; i++) {
@@ -109,10 +109,10 @@ function addToGrid(args) {
 
             for (let j = maxCols; j < maxCols + n; j++) {
                 let cell = row.insertCell(-1);
-                cell.id = convertColNum(j) + i;
+                cell.id = colNum2Label(j) + i;
                 cell.className = 'grid-cell';
                 let cellInput = document.createElement('input');
-                cellInput.id = convertColNum(j) + i + '_input';
+                cellInput.id = colNum2Label(j) + i + '_input';
                 cellInput.setAttribute('type', 'text');
                 cellInput.setAttribute('disabled', '');
                 cellInput.className = 'cell-input';
@@ -130,10 +130,10 @@ function addToGrid(args) {
             row.appendChild(row_header);
             for (let j = 0; j < maxCols; j++) {
                 let cell = row.insertCell(-1);
-                cell.id = convertColNum(j) + i;
+                cell.id = colNum2Label(j) + i;
                 cell.className = 'grid-cell';
                 let cellInput = document.createElement('input');
-                cellInput.id = convertColNum(j) + i + '_input';
+                cellInput.id = colNum2Label(j) + i + '_input';
                 cellInput.setAttribute('type', 'text');
                 cellInput.setAttribute('disabled', '');
                 cellInput.className = 'cell-input';

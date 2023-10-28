@@ -20,7 +20,7 @@ function initGrid() {
     col_header.appendChild(c);
     for (let i = 0; i < maxCols; i++) {
         const c = document.createElement("th");
-        c.innerHTML = convertColNum(i);
+        c.innerHTML = colNum2Label(i);
         c.className = 'col-header';
         col_header.appendChild(c);
     }
@@ -35,10 +35,10 @@ function initGrid() {
         row.appendChild(row_header);
         for (let j = 0; j < maxCols; j++) {
             let cell = row.insertCell(-1);
-            cell.id = convertColNum(j) + i;
+            cell.id = colNum2Label(j) + i;
             cell.className = 'grid-cell';
             let cellInput = document.createElement('input');
-            cellInput.id = convertColNum(j) + i + '_input';
+            cellInput.id = colNum2Label(j) + i + '_input';
             cellInput.setAttribute('type', 'text');
             cellInput.setAttribute('disabled', '');
             cellInput.className = 'cell-input';
