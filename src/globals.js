@@ -1,8 +1,7 @@
 //GLOBALS
 //All globals should be ONLY defined here
 
-var currentRow = 0;
-var currentCol = 0;
+var currentCell = {row: 0, col: 0};
 var mode = 'NORMAL';//NORMAL, INSERT, (VISUAL)?, COMMAND
 var modeHandler = {};
 
@@ -13,10 +12,8 @@ var commandBuffer = '';
 //VISUAL MODE
 var isVisual = false;
 var selectionBuffer = []; //used by visual mode to store selected cells(['A1','Z10',...])
-var selectionStartCellCol = 0; //first cell from where selection started
-var selectionStartCellRow = 0; //first cell from where selection started
-var selectionEndCellCol = 0; //first cell from where selection started
-var selectionEndCellRow = 0; //first cell from where selection started
+var selectionStart = {row: 0, col: 0};
+var selectionEnd = {row: 0, col: 0};
 
 //TODO: use 2d Array 
 var clipboard = [];

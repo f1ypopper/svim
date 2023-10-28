@@ -56,7 +56,6 @@ class Lexer {
     }
 
     scanInt() {
-        //console.log(this.source[this.start]);
         while (isNumber(this.peek()) && !this.atEnd()) {
             this.advance();
         }
@@ -100,7 +99,7 @@ class Lexer {
                         let row = this.scanInt();
                         let col = lexeme;
                         this.addCellToken(row, col);
-                        this.deps.push(col+row);
+                        this.deps.push({col: colLabel2Num(col), row: row});
                     } else {
                         //It's a Func Name
                         this.addFuncToken(lexeme);

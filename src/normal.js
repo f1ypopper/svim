@@ -2,26 +2,26 @@ export function modeNormal(ev) {
     switch (ev.key) {
         case 'h': {
             //Right
-            let newCol = Math.max(0, currentCol- 1);
-            changeCurrent(newCol, currentRow);
+            let newCol = Math.max(0, currentCell.col- 1);
+            changeCurrent({col: newCol, row: currentCell.row});
             break;
         }
         case 'l': {
             //Left
-            let newCol = Math.min(maxCols-1, currentCol+ 1);
-            changeCurrent(newCol, currentRow);
+            let newCol = Math.min(maxCols-1, currentCell.col+ 1);
+            changeCurrent({col: newCol, row: currentCell.row});
             break;
         }
         case 'j': {
             //Down
-            let newRow = Math.min(currentRow + 1, maxRows - 1);
-            changeCurrent(currentCol, newRow);
+            let newRow = Math.min(currentCell.row+ 1, maxRows - 1);
+            changeCurrent({col: currentCell.col, row:newRow});
             break;
         }
         case 'k': {
             //Up
-            let newRow = Math.max(currentRow - 1, 0);
-            changeCurrent(currentCol, newRow);
+            let newRow = Math.max(currentCell.row - 1, 0);
+            changeCurrent({col: currentCell.col, row:newRow});
             break;
         }
         case 'x': {
@@ -42,10 +42,10 @@ export function modeNormal(ev) {
         }
         case 'p': {
             //TODO: What if a value already exists?
-            for (let row = currentRow; row < currentRow + clipboard.length; row++) {
-                for (let col = currentCol; col < currentCol + clipboard.at(0).length; col++) {
-                    let clipValue = clipboard.at(row - currentRow).at(col - currentCol);
-                    getInputCell(col, row).value = clipValue;
+            for (let row = currentCell.row; row < currentCell.row + clipboard.length; row++) {
+                for (let col = currentCell.col; col < currentCell.col + clipboard.at(0).length; col++) {
+                    let clipValue = clipboard.at(row - currentCell.row).at(col - currentCell.col);
+                    getInputCell({col: col, row: row}).value = clipValue;
                 }
             }
             break;
@@ -55,20 +55,20 @@ export function modeNormal(ev) {
             mode = 'INSERT';
             let currentElem = getCurrentCell();
             let cellInput = currentElem.children[0];
-            if(colNum2Label(currentCol)+currentRow in formulaTable){
-                cellInput.value = formulaTable[colNum2Label(currentCol)+currentRow].source;
-                delete formulaTable[colNum2Label(currentCol)+currentRow];
+            if(currentCell in formulaTable){
+                cellInput.value = formulaTable[currentCell].source;
+                delete formulaTable[currentCell];
             }
             break;
         }
         case 'G': {
             //GOTO Last Cell
-            changeCurrent(maxCols-1, maxRows - 1);
+            changeCurrent({col: maxCols-1, row: maxRows - 1});
             break;
         }
         case 'g': {
             //GOTO Last Cell
-            changeCurrent(0, 0);
+            changeCurrent({col: 0, row: 0});
             break;
         }
         case ':': {
@@ -77,9 +77,7 @@ export function modeNormal(ev) {
         }
         case 'v': {
             isVisual = true;
-            selectionStartCellCol = currentCol;
-            selectionStartCellRow = currentRow;
-            addSelected(currentCol, currentRow);
+            selectionStart = {...currentCell};
             break;
         }
         case 'Escape': {
@@ -89,6 +87,6 @@ export function modeNormal(ev) {
         }
     }
     if (isVisual) {
-        addSelected(currentCol, currentRow);
+        addSelected(currentCell);
     }
 }

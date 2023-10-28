@@ -3,10 +3,10 @@ import {parse, Executor} from './formulaengine.js';
 function bold(args) {
     let startCol, startRow, endCol, endRow;
     if (isVisual) {
-        startCol = selectionStartCellCol;
-        startRow = selectionStartCellRow;
-        endCol = selectionEndCellCol;
-        endRow = selectionEndCellRow;
+        startCol = selectionStart.col;
+        startRow = selectionStart.row;
+        endCol = selectionEnd.col;
+        endRow = selectionEnd.row;
     } else {
         startCol = currentCol;
         startRow = currentRow;
@@ -15,19 +15,18 @@ function bold(args) {
     }
     for (let row = startRow; row <= endRow; row++) {
         for (let col = startCol; col <= endCol; col++) {
-            document.getElementById(colNum2Label(col) + row + '_input').style.fontWeight = 'bold';
+            getInputCell({col: col, row: row}).style.fontWeight = 'bold';
         }
     }
     exitCommandMode();
 }
 function center(args) {
-    console.log('HI');
     let startCol, startRow, endCol, endRow;
     if (isVisual) {
-        startCol = selectionStartCellCol;
-        startRow = selectionStartCellRow;
-        endCol = selectionEndCellCol;
-        endRow = selectionEndCellRow;
+        startCol = selectionStart.col;
+        startRow = selectionStart.row;
+        endCol = selectionEnd.col;
+        endRow = selectionEnd.row;
     } else {
         startCol = currentCol;
         startRow = currentRow;
@@ -36,7 +35,7 @@ function center(args) {
     }
     for (let row = startRow; row <= endRow; row++) {
         for (let col = startCol; col <= endCol; col++) {
-            document.getElementById(colNum2Label(col) + row + '_input').style.textAlign = 'center';
+            getInputCell({col: col, row: row}).style.textAlign = 'center';
         }
     }
     exitCommandMode();
@@ -49,10 +48,10 @@ function fill(args) {
     //TODO: Start from the number in the startCell
     let startCol, startRow, endCol, endRow;
     if (isVisual) {
-        startCol = selectionStartCellCol;
-        startRow = selectionStartCellRow;
-        endCol = selectionEndCellCol;
-        endRow = selectionEndCellRow;
+        startCol = selectionStart.col;
+        startRow = selectionStart.row;
+        endCol = selectionEnd.col;
+        endRow = selectionEnd.row;
     } else {
         startCol = currentCol;
         startRow = currentRow;
@@ -63,7 +62,7 @@ function fill(args) {
 
     for (let row = startRow; row <= endRow; row++) {
         for (let col = startCol; col <= endCol; col++) {
-            getInputCell(col, row).value = num;
+            getInputCell({col: col, row: row}).value = num;
             num++;
         }
     }
@@ -73,8 +72,8 @@ function fill(args) {
 function trans(args) {
     if (isVisual) {
         //TODO
-        let startCol = selectionStartCellCol;
-        let startRow = selectionStartCellRow;
+        let startCol = selectionStart.col;
+        let startRow = selectionStart.row;
 
         copyToClipboard();
         deleteSelection();
@@ -82,11 +81,11 @@ function trans(args) {
         for (let col = startCol; col < startCol + tClip.at(0).length; col++) {
             for (let row = startRow; row < startRow + tClip.length; row++) {
                 let clipValue = tClip.at(row - startRow).at(col - startCol);
-                getInputCell(col, row).value = clipValue;
+                getInputCell({col: col, row: row}).value = clipValue;
             }
         }
         isVisual = false;
-        changeCurrent(selectionStartCellCol, startRow);
+        changeCurrent(selectionStart);
     } else {
         commandError('VISUAL MODE NEEDED FOR transpose!');
     }
@@ -146,6 +145,7 @@ function addToGrid(args) {
 }
 
 export var commandMap = { 'trans': trans, 'fill': fill, 'center': center, 'bold': bold, 'add': addToGrid};
+
 function parseCommand() {
     let scomm = commandBuffer.split(' ');
     return { name: scomm.at(0), args: scomm.slice(1) };
@@ -165,9 +165,9 @@ export function modeCommand(ev) {
             //COMMAND IS GOTO CELL EX: (:A0)
             let newCord = parseCordinate(commandBuffer);
             if ((newCord.col < maxCols) && (newCord.row < maxRows)) {
-                changeCurrent(newCord.col, newCord.row);
+                changeCurrent({col: newCord.col, row: newCord.row});
                 if (isVisual) {
-                    addSelected(newCord.col, newCord.row);
+                    addSelected({col: newCord.col, row: newCord.row});
                 }
             }
             exitCommandMode();

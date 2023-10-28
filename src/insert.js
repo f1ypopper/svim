@@ -1,47 +1,45 @@
 import { parse, Executor } from './formulaengine.js';
 
-function handleFormula() {
-    let inputCell = getInputCell(currentCol, currentRow);
+function handleFormula(cell) {
+    let inputCell = getInputCell(cell);
     let source = inputCell.value;
     let formula = parse(source.substring(1));
     for (const dep of formula.deps) {
         if (!(dep in depTable)) {
             depTable[dep] = new Set();
         }
-        depTable[dep].add({ col: colNum2Label(currentCol), row: currentRow });
+        depTable[dep].add({ col: col, row: row });
     }
-    formulaTable[colNum2Label(currentCol) + currentRow] = { expr: formula.expr, source: source };
+    formulaTable[cell] = { expr: formula.expr, source: source };
     let executor = new Executor(formula.expr);
     inputCell.value = executor.execute();
 }
 
-function reExec(col, row) {
-    let formula = formulaTable[col + row];
+function reExec(cell) {
+    let formula = formulaTable[cell];
     let executor = new Executor(formula.expr);
-    getInputCell(colLabel2Num(col), row).value = executor.execute();
+    getInputCell(cell).value = executor.execute();
 }
 
-function reExecDeps(col, row) {
+function reExecDeps(cell) {
     //Maybe switch to a queue?
-    console.log(col, row);
-    if (colNum2Label(col) + row in depTable) {
-    for (const dep of depTable[colNum2Label(col) + row].values()) {
-            reExec(dep.col, dep.row);
-            reExecDeps(colLabel2Num(dep.col), dep.row);
+    if (cell in depTable) {
+        for (const dep of depTable[cell].values()) {
+            reExec(dep);
+            reExecDeps(dep);
         }
     }
 }
 
 export function modeInsert(ev) {
-    let currentElem = getCurrentCell();
-    let cellInput = currentElem.children[0];
+    let cellInput = getInputCell(currentCell);
 
     if (ev.key === 'Escape') {
         let value = cellInput.value;
         if (value.startsWith("=")) {
-            handleFormula();
+            handleFormula(current);
         }
-        reExecDeps(currentCol, currentRow);
+        reExecDeps(currentCell);
         mode = 'NORMAL';
         cellInput.setAttribute('disabled', '');
     } else {
