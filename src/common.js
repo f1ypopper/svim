@@ -54,8 +54,9 @@ function transpose(matrix) {
 
 
 function commandError(msg) {
-    commandBar.style.backgroundColor = 'red';
     commandBar.innerHTML = msg;
+    commandBar.style.backgroundColor = 'red';
+    commandHasError = true;
 }
 
 function copyToClipboard() {
@@ -118,8 +119,15 @@ function updateStatusBar() {
 function updateCommandBar() {
     if (mode === 'NORMAL') {
         commandBar.innerHTML = 'NORMAL';
+        commandBar.style.backgroundColor = 'rgb(235, 248, 118)';
     } else if (mode === 'COMMAND') {
-        commandBar.innerHTML = ':' + commandBuffer;
+        if(commandHasError === true){
+            commandBuffer = '';
+            commandHasError = false;
+            mode = 'NORMAL';
+        }else{
+            commandBar.innerHTML = ':' + commandBuffer;
+        }
     }else{
         commandBar.innerHTML = mode;
     }

@@ -8,6 +8,7 @@ var modeHandler = {};
 
 //COMMAND MODE
 var commandBuffer = '';
+var commandHasError = false;
 //var commandMap = { 'trans': trans, 'fill': fill, 'center': center, 'bold': bold };
 
 //VISUAL MODE

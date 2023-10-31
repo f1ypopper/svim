@@ -87,10 +87,10 @@ function trans(args) {
         }
         isVisual = false;
         changeCurrent(selectionStartCellCol, startRow);
+        exitCommandMode();
     } else {
-        commandError('VISUAL MODE NEEDED FOR transpose!');
+        commandError('visual mode required for transpose');
     }
-    exitCommandMode();
 }
 
 function addToGrid(args) {
