@@ -55,7 +55,7 @@ function registerCallbacks() {
 
 export function setup() {
     initGrid();
-    setCurrent(0, 0);
+    setCurrent(currentCell);
     registerCallbacks();
     updateStatusBar();
     window.addEventListener('keydown', handleKeyEv);
