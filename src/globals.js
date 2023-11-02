@@ -13,10 +13,10 @@ var commandBuffer = '';
 //VISUAL MODE
 var isVisual = false;
 var selectionBuffer = []; //used by visual mode to store selected cells(['A1','Z10',...])
-var selectionStartCellCol = 0; //first cell from where selection started
-var selectionStartCellRow = 0; //first cell from where selection started
-var selectionEndCellCol = 0; //first cell from where selection started
-var selectionEndCellRow = 0; //first cell from where selection started
+var selectionStartCellCol = 0; //cell from where selection has started
+var selectionStartCellRow = 0; //cell from where selection has started
+var selectionEndCellCol = 0; //cell from where selection has ended
+var selectionEndCellRow = 0; //cell from where selection has ended
 
 //TODO: use 2d Array 
 var clipboard = [];
