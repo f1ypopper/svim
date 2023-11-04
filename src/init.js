@@ -7,10 +7,18 @@ function handleKeyEv(ev) {
   if (ev.key === " " && ev.target.tagName === "BODY") {
     ev.preventDefault();
   }
+  if(isVisual){
+    Selection.clear();
+  }
   modeHandler[mode](ev);
   updateStatusBar();
   updateCommandBar();
+
+  if(isVisual){
+    Selection.show();
+  }
 }
+
 function initGrid() {
   var grid = document.getElementById("grid");
   //Column Name Header

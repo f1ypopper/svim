@@ -114,10 +114,7 @@ export function modeCommand(ev) {
       //COMMAND IS GOTO CELL EX: (:A0)
       let newCord = parseCordinate(commandBuffer);
       if (newCord.col < maxCols && newCord.row < maxRows) {
-        changeCurrent(newCord.col, newCord.row);
-        if (isVisual) {
-          addSelected(newCord.col, newCord.row);
-        }
+        Current.update(newCord.row, newCord.col);
       }
       exitCommandMode();
     }

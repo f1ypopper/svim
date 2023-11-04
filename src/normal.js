@@ -1,7 +1,4 @@
 export function modeNormal(ev) {
-  if (isVisual) {
-    Selection.clear();
-  }
   switch (ev.key) {
     case "h": {
       //Left
@@ -81,8 +78,5 @@ export function modeNormal(ev) {
       isVisual = false;
       break;
     }
-  }
-  if (isVisual) {
-    Selection.show();
   }
 }
