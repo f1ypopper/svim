@@ -1,50 +1,48 @@
 export function modeNormal(ev) {
+    if(isVisual){
+        Selection.clear();
+    }
     switch (ev.key) {
         case 'h': {
-            //Right
-            let newCol = Math.max(0, currentCol- 1);
-            changeCurrent(newCol, currentRow);
+            //Left
+            Current.moveLeft();
             break;
         }
         case 'l': {
-            //Left
-            let newCol = Math.min(maxCols-1, currentCol+ 1);
-            changeCurrent(newCol, currentRow);
+            //Right
+            Current.moveRight();
             break;
         }
         case 'j': {
             //Down
-            let newRow = Math.min(currentRow + 1, maxRows - 1);
-            changeCurrent(currentCol, newRow);
+            Current.moveDown();
             break;
         }
         case 'k': {
             //Up
-            let newRow = Math.max(currentRow - 1, 0);
-            changeCurrent(currentCol, newRow);
+            Current.moveUp();
             break;
         }
         case 'x': {
             //Copy the entry to selection and Delete 
             copyToClipboard();
-            deleteSelection();
-            clearSelection();
+            Selection.delete();
+            Selection.clear();
             isVisual = false;
-            //inputCell.value = ''; ?
             break;
         }
         case 'y': {
             //Copy the entry to selection
             copyToClipboard();
-            clearSelection();
+            Selection.clear();
             isVisual = false;
             break;
         }
         case 'p': {
             //TODO: What if a value already exists?
-            for (let row = currentRow; row < currentRow + clipboard.length; row++) {
-                for (let col = currentCol; col < currentCol + clipboard.at(0).length; col++) {
-                    let clipValue = clipboard.at(row - currentRow).at(col - currentCol);
+            for (let row = Current.row; row < Current.row + clipboard.length; row++) {
+                for (let col = Current.col; col < Current.col + clipboard.at(0).length; col++) {
+                    let clipValue = clipboard.at(row - Current.row).at(col - Current.col);
                     getInputCell(col, row).value = clipValue;
                 }
             }
@@ -53,22 +51,16 @@ export function modeNormal(ev) {
         case 'i': {
             //Insert
             mode = 'INSERT';
-            let currentElem = getCurrentCell();
-            let cellInput = currentElem.children[0];
-            if(colNum2Label(currentCol)+currentRow in formulaTable){
-                cellInput.value = formulaTable[colNum2Label(currentCol)+currentRow].source;
-                delete formulaTable[colNum2Label(currentCol)+currentRow];
-            }
             break;
         }
         case 'G': {
-            //GOTO Last Cell
-            changeCurrent(maxCols-1, maxRows - 1);
+            //GOTO first Cell
+            Current.update(maxRows-1, maxCols - 1);
             break;
         }
         case 'g': {
             //GOTO Last Cell
-            changeCurrent(0, 0);
+            Current.update(0, 0);
             break;
         }
         case ':': {
@@ -77,18 +69,16 @@ export function modeNormal(ev) {
         }
         case 'v': {
             isVisual = true;
-            selectionStartCellCol = currentCol;
-            selectionStartCellRow = currentRow;
-            addSelected(currentCol, currentRow);
+            Selection.newSelection(Current);
             break;
         }
         case 'Escape': {
-            clearSelection();
+            Selection.clear();
             isVisual = false;
             break;
         }
     }
     if (isVisual) {
-        addSelected(currentCol, currentRow);
+        Selection.show();
     }
 }

@@ -1,6 +1,7 @@
 import { modeCommand } from './command.js';
 import { modeNormal } from './normal.js';
 import { modeInsert } from './insert.js';
+import { CurrentCell, SelectionRange } from './cell.js';
 
 function handleKeyEv(ev) {
     if (ev.key === ' ' && ev.target.tagName === 'BODY') {
@@ -55,10 +56,13 @@ function registerCallbacks() {
 
 export function setup() {
     initGrid();
-    setCurrent(0, 0);
+    Current = new CurrentCell(0,0);
+    Selection = new SelectionRange(Current);
+    Current.show();
     registerCallbacks();
     updateStatusBar();
     window.addEventListener('keydown', handleKeyEv);
+    document.scrollTo(0,0);
 }
 
 setup();

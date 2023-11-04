@@ -33,20 +33,16 @@ function reExecDeps(col, row) {
 }
 
 export function modeInsert(ev) {
-    let currentElem = getCurrentCell();
-    let cellInput = currentElem.children[0];
-
     if (ev.key === 'Escape') {
-        let value = cellInput.value;
+        let value = Current.value;
         if (value.startsWith("=")) {
-            handleFormula();
+            //handleFormula();
         }
-        reExecDeps(currentCol, currentRow);
+        //reExecDeps(currentCol, currentRow);
         mode = 'NORMAL';
-        cellInput.setAttribute('disabled', '');
+        Current.elem.setAttribute('disabled', '');
     } else {
-        cellInput.removeAttribute('disabled');
-        cellInput.focus();
-
+        Current.elem.removeAttribute('disabled');
+        Current.elem.focus();
     }
 }
