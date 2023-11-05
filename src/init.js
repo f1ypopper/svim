@@ -2,19 +2,20 @@ import { modeCommand } from "./command.js";
 import { modeNormal } from "./normal.js";
 import { modeInsert } from "./insert.js";
 import { CurrentCell, SelectionRange } from "./cell.js";
+import { FormulaTable } from "./ftable.js";
 
 function handleKeyEv(ev) {
   if (ev.key === " " && ev.target.tagName === "BODY") {
     ev.preventDefault();
   }
-  if(isVisual){
+  if (isVisual) {
     Selection.clear();
   }
   modeHandler[mode](ev);
   updateStatusBar();
   updateCommandBar();
 
-  if(isVisual){
+  if (isVisual) {
     Selection.show();
   }
 }
@@ -70,7 +71,8 @@ export function setup() {
   registerCallbacks();
   updateStatusBar();
   window.addEventListener("keydown", handleKeyEv);
-  document.scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  formulaTable = new FormulaTable();
 }
 
 setup();

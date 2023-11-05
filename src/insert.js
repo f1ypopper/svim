@@ -1,36 +1,26 @@
 import { parse, Executor } from "./formulaengine.js";
 
-function handleFormula() {
-  let inputCell = getInputCell(currentCol, currentRow);
-  let source = inputCell.value;
-  let formula = parse(source.substring(1));
-  for (const dep of formula.deps) {
-    if (!(dep in depTable)) {
-      depTable[dep] = new Set();
-    }
-    depTable[dep].add({ col: colNum2Label(currentCol), row: currentRow });
+function executeFormula(cell) {
+  if (formulaTable.isFormula(cell)) {
+    let formula = formulaTable.getFormula(cell);
+    let exec = new Executor(formula.expr);
+    cell.value = exec.execute();
   }
-  formulaTable[colNum2Label(currentCol) + currentRow] = {
-    expr: formula.expr,
-    source: source,
-  };
-  let executor = new Executor(formula.expr);
-  inputCell.value = executor.execute();
 }
 
-function reExec(col, row) {
-  let formula = formulaTable[col + row];
-  let executor = new Executor(formula.expr);
-  getInputCell(colLabel2Num(col), row).value = executor.execute();
+function handleFormula(cell) {
+  let source = cell.value.substring(1);
+  let formula = parse(source);
+  formulaTable.addFormula(cell, formula);
+  executeFormula(cell);
 }
 
-function reExecDeps(col, row) {
-  //Maybe switch to a queue?
-  console.log(col, row);
-  if (colNum2Label(col) + row in depTable) {
-    for (const dep of depTable[colNum2Label(col) + row].values()) {
-      reExec(dep.col, dep.row);
-      reExecDeps(colLabel2Num(dep.col), dep.row);
+function reExecDeps(cell) {
+  if (formulaTable.isDependency(cell)) {
+    let dependees = formulaTable.getDeps(cell);
+    for (const d of dependees) {
+      executeFormula(d);
+      reExecDeps(d);
     }
   }
 }
@@ -39,9 +29,9 @@ export function modeInsert(ev) {
   if (ev.key === "Escape") {
     let value = Current.value;
     if (value.startsWith("=")) {
-      //handleFormula();
+      handleFormula(Current);
     }
-    //reExecDeps(currentCol, currentRow);
+    reExecDeps(Current);
     mode = "NORMAL";
     Current.elem.setAttribute("disabled", "");
   } else {

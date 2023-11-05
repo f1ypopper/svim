@@ -1,3 +1,5 @@
+import { Cell } from "./cell.js";
+
 const tokenType = {
   Cell: "CELL",
   Plus: "PLUS",
@@ -25,7 +27,7 @@ class Lexer {
     this.current = 0;
     this.length = source.length;
     this.tokens = [];
-    this.deps = []; //All the cells this formula depends on
+    this.deps = new Set(); //All the cells this formula depends on
   }
 
   createToken(tokenType, lexeme) {
@@ -122,9 +124,9 @@ class Lexer {
             //It's a Cell
             this.start = this.current;
             let row = this.scanInt();
-            let col = lexeme;
+            let col = colLabel2Num(lexeme);
             this.addCellToken(row, col);
-            this.deps.push(col + row);
+            this.deps.add(new Cell(row, col));
           } else {
             //It's a Func Name
             this.addFuncToken(lexeme);
@@ -384,10 +386,7 @@ export class Executor {
     if (literalExpr.literal.type === tokenType.Literal) {
       return literalExpr.literal.value;
     } else if (literalExpr.literal.type === tokenType.Cell) {
-      let cell = getInputCell(
-        colLabel2Num(literalExpr.literal.col),
-        literalExpr.literal.row
-      );
+      let cell = getInputCell(literalExpr.literal.col, literalExpr.literal.row);
       return parseFloat(cell.value);
     }
   }

@@ -22,5 +22,4 @@ var status_bar = document.getElementById("status");
 let commandBar = document.getElementById("command-bar");
 
 //FORMULA
-let depTable = {};
-let formulaTable = {};
+let formulaTable = undefined;
