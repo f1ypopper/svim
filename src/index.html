@@ -33,7 +33,7 @@
     <script type="module" src="formulaengine.js"></script>
     <script type="module" src="ftable.js"></script>
     <script>
-        function myFunction() {
+        function stickyScroll() {
             var status = document.getElementById("status");
             var grid = document.getElementById("grid");
             var stickyTop = status.offsetTop;
@@ -50,7 +50,7 @@
                 grid.style.top = "0px";
             }
         }
-        window.addEventListener('scroll', myFunction);
+        window.addEventListener('scroll', stickyScroll);
     </script>
 </body>
 
