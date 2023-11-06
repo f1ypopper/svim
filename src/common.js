@@ -127,3 +127,20 @@ function extendRow(n) {
   }
   maxRows += n;
 }
+
+function truncateRow(n){
+  for (let i = 0; i < n; i++) {
+    grid.deleteRow(-1);
+  }
+  maxRows -= n;
+}
+
+function truncateCol(n){
+  for(let i = 0; i <= maxRows; i++){
+    let row = grid.rows[i];
+    for(let col = 0; col < n; col++){
+      row.deleteCell(-1);
+    }
+  }
+  maxCols -= n;
+}
