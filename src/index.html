@@ -11,7 +11,7 @@
     </title>
 </head>
 
-<body>
+<body ondrop="importCSVHandler(event);" ondragover="dragOverHandler(event);">
     <table id="status" class="status">
         <tr>
             <td id="status_current_cell" class="status_current_cell"></td>
@@ -49,6 +49,47 @@
                 status.classList.remove("sticky_status_horizontal");
                 grid.style.top = "0px";
             }
+        }
+
+        function openCSV(source){
+            let rows = source.split('\r\n');
+            let nrows = rows.length;
+            if(nrows > maxRows){
+                extendRow(nrows-maxRows);
+            }
+            for(let r = 0; r < nrows; r++){
+                const cols = rows[r].split(',');
+                const ncols = cols.length;
+                if(ncols > maxCols){
+                    extendCol(ncols-maxCols);
+                }
+                for(let c = 0; c < ncols;c++){
+                    getInputCell(c,r).value = cols[c];
+                }
+            }
+        }
+
+        function importCSVHandler(ev) {
+            ev.preventDefault();
+            if (ev.dataTransfer.items) {
+                // Use DataTransferItemList interface to access the file(s)
+                [...ev.dataTransfer.items].forEach((item, i) => {
+                    // If dropped items aren't files, reject them
+                    if (item.kind === "file") {
+                        const file = item.getAsFile();
+                        file.text().then((text)=>{openCSV(text);});
+                    }
+                });
+            } else {
+                // Use DataTransfer interface to access the file(s)
+                [...ev.dataTransfer.files].forEach((file, i) => {
+                });
+            }
+        }
+
+        function dragOverHandler(ev) {
+            // Prevent default behavior (Prevent file from being opened)
+            ev.preventDefault();
         }
         window.addEventListener('scroll', stickyScroll);
     </script>

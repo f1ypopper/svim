@@ -78,3 +78,52 @@ function parseCordinate(cord) {
 function getInputCell(col, row) {
   return document.getElementById(colNum2Label(col) + row + "_input");
 }
+
+function extendCol(n) {
+  let col_header = document.getElementById("col_heads");
+  for (let i = maxCols; i < maxCols + n; i++) {
+    const ch = document.createElement("th");
+    ch.className = "col-header";
+    ch.innerHTML = colNum2Label(i);
+    col_header.appendChild(ch);
+  }
+  for (let i = 0; i < maxRows; i++) {
+    let row = document.getElementById(i + "_row");
+
+    for (let j = maxCols; j < maxCols + n; j++) {
+      let cell = row.insertCell(-1);
+      cell.id = colNum2Label(j) + i;
+      cell.className = "grid-cell";
+      let cellInput = document.createElement("input");
+      cellInput.id = colNum2Label(j) + i + "_input";
+      cellInput.setAttribute("type", "text");
+      cellInput.setAttribute("disabled", "");
+      cellInput.className = "cell-input";
+      cell.appendChild(cellInput);
+    }
+  }
+  maxCols += n;
+}
+
+function extendRow(n) {
+  for (let i = maxRows; i < maxRows + n; i++) {
+    let row = grid.insertRow(-1);
+    row.id = i + "_row";
+    let row_header = document.createElement("th");
+    row_header.innerHTML = i;
+    row_header.className = "row-header";
+    row.appendChild(row_header);
+    for (let j = 0; j < maxCols; j++) {
+      let cell = row.insertCell(-1);
+      cell.id = colNum2Label(j) + i;
+      cell.className = "grid-cell";
+      let cellInput = document.createElement("input");
+      cellInput.id = colNum2Label(j) + i + "_input";
+      cellInput.setAttribute("type", "text");
+      cellInput.setAttribute("disabled", "");
+      cellInput.className = "cell-input";
+      cell.appendChild(cellInput);
+    }
+  }
+  maxRows += n;
+}
