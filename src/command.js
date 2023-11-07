@@ -47,12 +47,42 @@ function addToGrid(args) {
   }
   exitCommandMode();
 }
+const downloadFile = function (text, fileName) {
+  const link = document.createElement("a");
+  link.setAttribute(
+    "href",
+    `data:text/csv;charset=utf-8,${encodeURIComponent(text)}`
+  );
+  link.setAttribute("download", fileName);
+
+  link.style.display = "none";
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+};
+
+const exportCSV = function (args) {
+  //Get the min row and col which are not empty
+  let fileName = args[0]+'.csv';
+  let data = "";
+  for (let row = 0; row < maxRows; row++) {
+    let rowText = "";
+    for (let col = 0; col < maxCols; col++) {
+      rowText += getInputCell(col, row).value + ",";
+    }
+    data += rowText + "\n";
+  }
+  downloadFile(data, fileName);
+};
 
 export var commandMap = {
   fill: fill,
   center: center,
   bold: bold,
   add: addToGrid,
+  export: exportCSV,
 };
 function parseCommand() {
   let scomm = commandBuffer.split(" ");
