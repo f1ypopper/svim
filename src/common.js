@@ -49,11 +49,11 @@ function colNum2Label(col) {
 
 function updateStatusBar() {
   if (isVisual) {
-    document.getElementById("status_current_cell").innerHTML =
-      Selection.start + ":" + Selection.end;
+    statusCurrentCell.innerHTML = Selection.start + ":" + Selection.end;
   } else if (mode === "NORMAL") {
-    document.getElementById("status_current_cell").innerHTML = Current.label;
+    statusCurrentCell.innerHTML = Current.label;
   }
+  statusCurrentCellValue.innerText = Current.value;
 }
 
 function updateCommandBar() {
@@ -128,17 +128,17 @@ function extendRow(n) {
   maxRows += n;
 }
 
-function truncateRow(n){
+function truncateRow(n) {
   for (let i = 0; i < n; i++) {
     grid.deleteRow(-1);
   }
   maxRows -= n;
 }
 
-function truncateCol(n){
-  for(let i = 0; i <= maxRows; i++){
+function truncateCol(n) {
+  for (let i = 0; i <= maxRows; i++) {
     let row = grid.rows[i];
-    for(let col = 0; col < n; col++){
+    for (let col = 0; col < n; col++) {
       row.deleteCell(-1);
     }
   }
