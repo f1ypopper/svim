@@ -70,9 +70,15 @@ const exportCSV = function (args) {
   for (let row = 0; row < maxRows; row++) {
     let rowText = "";
     for (let col = 0; col < maxCols; col++) {
-      rowText += getInputCell(col, row).value + ",";
+      rowText += getInputCell(col, row).value;
+      if(col+1 < maxCols){
+        rowText+=',';
+      }
     }
-    data += rowText + "\n";
+    data += rowText;
+    if(row+1 < maxRows){
+      data+='\n';
+    }
   }
   downloadFile(data, fileName);
 };
