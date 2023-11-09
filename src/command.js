@@ -83,12 +83,44 @@ const exportCSV = function (args) {
   downloadFile(data, fileName);
 };
 
+function save(args){
+  let flatGrid = [];
+  for(let i = 0; i < maxRows; i++){
+    for(let j = 0; j < maxCols; j++){
+      flatGrid.push(getInputCell(j,i).value);
+    }
+  }
+  let i = 0;
+  let len = flatGrid.length;
+  let encoded = '';
+  while(i < len){
+    let value = flatGrid[i];
+    let count = 1;
+    while(value === flatGrid[i+1]){
+      count++;
+      i++;
+    }
+    if(count > 1){
+      encoded+=count;
+    }
+    if(value){
+      encoded+='"'+value+'"';
+    }else{
+      encoded+='E';
+    }
+    i++;
+  }
+  console.log(encoded);
+  exitCommandMode();
+}
+
 export var commandMap = {
   fill: fill,
   center: center,
   bold: bold,
   add: addToGrid,
   export: exportCSV,
+  save: save,
 };
 function parseCommand() {
   let scomm = commandBuffer.split(" ");

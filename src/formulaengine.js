@@ -11,6 +11,7 @@ const tokenType = {
   Literal: "LITERAL",
   FuncName: "FUNC_NAME",
   Comma: "COMMA",
+  Colon: "COLON",
   Eof: "EOF",
 };
 function isLetter(character) {
@@ -103,6 +104,10 @@ class Lexer {
       }
       case ")": {
         return this.addToken(tokenType.RightParen);
+        break;
+      }
+      case ":":{
+        return this.addToken(tokenType.Colon);
         break;
       }
       case ",": {
