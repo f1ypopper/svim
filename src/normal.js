@@ -23,9 +23,13 @@ export function modeNormal(ev) {
     case "x": {
       //Copy the entry to selection and Delete
       copyToClipboard();
-      Selection.delete();
-      Selection.clear();
-      isVisual = false;
+      if(isVisual){
+        Selection.delete();
+        Selection.clear();
+        isVisual = false;
+      }else{
+        Current.value = '';
+      }
       break;
     }
     case "y": {
