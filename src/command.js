@@ -83,8 +83,8 @@ const exportCSV = function (args) {
   downloadFile(data, fileName);
 };
 
-function isDigit(c){
-  return c >= '0' && c <= '9';
+function isDigit(c) {
+  return c >= "0" && c <= "9";
 }
 
 function decodeSVF(source) {
@@ -94,9 +94,9 @@ function decodeSVF(source) {
   let value = "";
   while (i < len) {
     let multiple = 0;
-    if(isDigit(source[i])){
+    if (isDigit(source[i])) {
       let start = i;
-      while(isDigit(source[i])){
+      while (isDigit(source[i])) {
         i++;
       }
       multiple = parseInt(source.substring(start, i));
@@ -110,7 +110,7 @@ function decodeSVF(source) {
       value = source.substring(start, i);
       i++;
     }
-    while(multiple){
+    while (multiple) {
       flatArray.push(value);
       multiple++;
     }
@@ -149,6 +149,18 @@ function save(args) {
   exitCommandMode();
 }
 
+function cellcolor(args) {
+  let color = args[0];
+  if (isVisual) {
+    Selection.map(function (cell) {
+      cell.elem.style.backgroundColor = color;
+    });
+  } else {
+    Current.elem.style.backgroundColor = color;
+  }
+  exitCommandMode();
+}
+
 export var commandMap = {
   fill: fill,
   align: align,
@@ -156,6 +168,7 @@ export var commandMap = {
   add: addToGrid,
   export: exportCSV,
   save: save,
+  color: cellcolor,
 };
 function parseCommand() {
   let scomm = commandBuffer.split(" ");
