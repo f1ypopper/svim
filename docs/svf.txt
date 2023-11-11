@@ -1,0 +1,22 @@
+========================SVIM FILE FORMAT========================
+
+(might get revised)
+
+svf should be primarily used to store and transfer sheets.
+
+svim file format starts with a header having 2 integers: rows & cols
+
+The svim file format has only 2 data types:
+1. String
+2. Empty
+
+String:
+Strings start and end with '"'
+
+Empty:
+Empty Cells are represented with E
+
+Cells are encoded using Run Length Encoding
+
+EXAMPLE:
+"Hello"2E"World"100E
