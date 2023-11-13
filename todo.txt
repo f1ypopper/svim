@@ -6,7 +6,7 @@ FORMULA ENGINE:
 
 GENERAL:
 1. Refactor Code
-2. Pls use uniform addressing of cells[DONE]
+2. Support a LOT more cells by using lazy rendering.
 
 VISUAL:
 1. Currently in visual mode, the Selection re-renders the whole selection when CurrentCell is changed, this makes motion while large visual selections really slow.
